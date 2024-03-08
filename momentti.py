@@ -5,36 +5,44 @@ reach_table = [28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18]
 # Function to calculate maximum reach based on weight
 def calculate_reach(weight):
    # Initialize maximum reach
-   max_reach = 0
+    max_reach = 0
    
    # If weight is less than 15 kg, set maximum reach to 28 cm
-   if weight < 15:
+    if weight < 15:
        max_reach = 28
        return max_reach
 
    # If weight is between 30 and 35 kg, set maximum reach to 18 cm
-   if 30 <= weight <= 35:
+    if 30 <= weight <= 35:
        max_reach = 18
        return max_reach
 
    # If weight is greater than 35 kg, set maximum reach to 0 cm
-   if weight > 35:
+    if weight > 35:
        max_reach = 0
        return max_reach
 
    # Iterate through weight_table to find the correct range
-   for i in range(len(weight_table)-1):
+    for i in range(len(weight_table)-1):
        if weight_table[i] <= weight <= weight_table[i+1]:
            weight1 = weight_table[i]
            weight2 = weight_table[i+1]
            reach1 = reach_table[i]
            reach2 = reach_table[i+1]
            break
-
+    
+    if reach1 > reach2:
+       max_reach1 = reach1
+       min_reach1 = reach2
+    elif reach2 > reach1:
+       max_reach1 = reach2
+       min_reach1 = reach1
+       
+    
    # Calculate maximum reach using the formula
-   max_reach = max(reach1, reach2) + ((weight - weight1) * (min(reach1, reach2) - max(reach1, reach2))) / (weight2 - weight1)
+    max_reach = max_reach1 + ((weight - weight1) * (min_reach1 - max_reach1)) / (weight2 - weight1)
 
-   return max_reach
+    return max_reach
 
 # Function to calculate momentti based on maximum reach and used reach
 def calculate_momentti(max_reach, used_reach):
@@ -45,7 +53,7 @@ def calculate_momentti(max_reach, used_reach):
    return momentti
 
 # Set variables for weight (paino) and used reach (ulottuma)
-paino = 20
+paino = 35
 ulottuma = 20
 
 # Calculate maximum reach for the given weight
@@ -65,4 +73,5 @@ if isinstance(momentti, (int, float)):
    print(f"Momentti: {momentti:.1f}%")
 else:
    print(momentti)
+
 
